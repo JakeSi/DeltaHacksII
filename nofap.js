@@ -32,13 +32,42 @@ function Cat(ratio, imageurl){
  }
 
 var myCat = [ 
-new Cat("horizontal", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
-new Cat("vertical", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
-new Cat("square", "http://www.helpinghomelesscats.com/images/cat1.jpg")
+  new Cat("horizontal", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
+  new Cat("vertical", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
+  new Cat("square", "http://www.helpinghomelesscats.com/images/cat1.jpg")
 ]
 
-function filterImage(imgUrl){
-  console.log(imgUrl);
+var nsfwTags = {
+  "sexy":true,
+  "attractive":true,
+  "erotic":true,
+  "model":true,
+  "porn":true,
+  "boob":true,
+  "breast":true,
+  "brassiere":true,
+  "bra":true,
+  "butt":true,
+  "underwear":true,
+  "lingerie":true,
+  "pantie":true,
+  "sign":true
+}
+
+function isNSFW(tags){
+  var numTags = Math.min(tags.length,10);
+  for (var i = 0; i < numTags; i++) {
+    console.log("tag:" + tags[i].tag);
+    if (tags[i].tag in nsfwTags) {
+      console.log("NSFW");
+      return true;
+    };
+  };
+
+  return false;
+}
+
+function filterImage(img){
   $.ajax({ 
       headers : {
         "authorization": "Basic YWNjX2M1OWNlNDY5OTAxNDNiYzpkZDM2YzQzM2JjODliODc0OGUwNzJhZGZiZjFmNTNkYQ==",
@@ -48,10 +77,13 @@ function filterImage(imgUrl){
       dataType: "json",
       url: "https://api.imagga.com/v1/tagging",
       data: {
-        "url": imgUrl
+        "url": img.src
       },
-      success: function(data){        
-        alert(data);
+      success: function(data){
+      console.log(data);        
+        if(isNSFW(data.results[0].tags)){
+          img.src = getCat["horizontal"]()[0].imageurl;
+        }
       },
       error: function(data){
         alert("ASDGSDFGSDFG");
@@ -78,14 +110,12 @@ function imageRatio(image) {
 
   var images = document.getElementsByTagName('img')
   var length = images.length
-  
+
   filterImage(images[0]);
 
   for (var i = 0; i < length; i++) {
     var ratio = imageRatio(images[i]);
     // var number = Randomize(getCat[ratio]());
-    var img = getCat["horizontal"]()[0];
-    images[i].src = img.imageurl
   }
 
 })(document);
