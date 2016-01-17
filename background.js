@@ -1,6 +1,7 @@
-chrome.browserAction.onClicked.addListener(function(tab) {
-  console.log("NO FAP TODAY...")
-  chrome.tabs.executeScript(null, {
-    file: "nofap.js"
-  });
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+    if(changeInfo && changeInfo.status == "complete"){
+        chrome.tabs.executeScript(tabId, {file: "jquery-2.2.0.min.js"}, function(){
+            chrome.tabs.executeScript(tabId, {file: "nofap.js"});
+        });
+    }
 });

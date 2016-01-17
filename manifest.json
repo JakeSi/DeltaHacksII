@@ -17,7 +17,7 @@
   },
   "content_scripts": [ {
     "js": [ "jquery-2.2.0.min.js", "background.js", "nofap.js" ],
-    "matches": [ "http://*/*", "https://*/*"]
+    "matches": ["<all_urls>"]
   }],
   "manifest_version": 2
 }

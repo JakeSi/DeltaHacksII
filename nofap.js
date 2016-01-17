@@ -3,6 +3,8 @@ function Cat(ratio, imageurl){
   this.imageurl = imageurl;
 }
 
+var token = "";
+
 var getCat = {
   init: function(myCat){
     this.myCat = myCat;
@@ -38,6 +40,9 @@ var myCat = [
 ]
 
 var visitedImages = {}
+
+var uploadContentHash = {};
+
 var nsfwTags = {
   "sexy":true,
   "attractive":true,
@@ -52,15 +57,16 @@ var nsfwTags = {
   "underwear":true,
   "lingerie":true,
   "pantie":true,
-  "sign":true
+  "ocean":true,
+  "symbol":true
 }
 
 function isNSFW(tags){
   var numTags = Math.min(tags.length,10);
   for (var i = 0; i < numTags; i++) {
-    console.log("tag:" + tags[i].tag);
-    if (tags[i].tag in nsfwTags) {
-      console.log("NSFW");
+    // console.log("tag:" + tags[i].tag);
+    if (tags[i] in nsfwTags) {
+      // console.log("NSFW");
       return true;
     };
   };
@@ -69,31 +75,31 @@ function isNSFW(tags){
 }
 
 function filterImage(img){
+  var authbearer = " Bearer " + token;
   $.ajax({ 
       headers : {
-        "authorization": "Basic YWNjX2M1OWNlNDY5OTAxNDNiYzpkZDM2YzQzM2JjODliODc0OGUwNzJhZGZiZjFmNTNkYQ==",
-        "accept": "application/json"
+        "Authorization": authbearer
       },
-      type: "GET",
-      dataType: "json",
-      url: "https://api.imagga.com/v1/tagging",
+      type: "POST",
+      url: "https://api.clarifai.com/v1/tag/",
       data: {
         "url": img.src
       },
       success: function(data){
-      console.log(data);        
-        if(isNSFW(data.results[0].tags)){
-          visitedImages[img.imageurl] = true;
+      console.log(data);       
+        if(isNSFW(data.results[0].result.tag.classes)){
+          console.log("NSFW" + img.src);
+           visitedImages[img.imageurl] = true;
           img.src = getCat["horizontal"]()[0].imageurl;
         } else {
-          visitedImages[img.imageurl] = false;
+           visitedImages[img.imageurl] = false;
         }
       },
       error: function(data){
-        alert("ASDGSDFGSDFG");
+        console.log(data);
       }
 
-    });
+  });
 }
 
 function imageRatio(image) {
@@ -108,20 +114,52 @@ function imageRatio(image) {
   }
 }     
 
+function fetchApiToken(image){
+  $.ajax({ 
+
+      type: "POST",
+      dataType: "json",
+      url: "https://api.clarifai.com/v1/token/",
+      data: {
+        "client_id": "jh5NmLb9r7d0HnmsnrJ7JU9m1kUTasdwf85PHjQw",
+        "client_secret" : "DHEAVtaAHniJACaIpnWBTo0JCyAyhtcFdaoeb-vH",
+        "grant_type" : "client_credentials"
+      },
+      async: false,
+      success: function(data){
+        console.log(data);
+        token = data.access_token;       
+      },
+      error: function(data){
+        console.log(data);
+      }
+
+  });
+}
+
+function filterImages(){
+     // is cached as nsfw or not in cache ye
+}
+
 (function (document) {
 
   getCat.init(myCat);
 
+  fetchApiToken();
+
   var images = document.getElementsByTagName('img')
   var length = images.length
 
-  // is cached as nsfw or not in cache yet
-  if(!(images[0].imageurl in visitedImages) || (visitedImages[images[0]].imageurl)) {
-    filterImage(images[0]);
-  }
-
   for (var i = 0; i < length; i++) {
+    var uploadContentHash = [];
     var ratio = imageRatio(images[i]);
+
+    // is cached as nsfw or not in cache yet
+    if(!(images[i].imageurl in visitedImages) || (visitedImages[images[i]].imageurl)) {
+      if (images[i].height > 100 && images[i].width > 100) {
+        filterImage(images[i]);
+      };
+    }
     // var number = Randomize(getCat[ratio]());
   }
 
