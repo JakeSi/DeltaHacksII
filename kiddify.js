@@ -33,6 +33,42 @@ function Randomize(images){
   return Math.floor(Math.random() * images.length)
 }
 
+function filterDiv(div, url) {
+  var authbearer = " Bearer " + token;
+  $.ajax({
+      headers : {
+        "Authorization": authbearer
+      },
+      type: "POST",
+      url: "https://api.clarifai.com/v1/tag/",
+      data: {
+        "url": url
+      },
+      success: function(data){
+      console.log(data);
+        if(isNSFW(data.results[0].result.tag.classes)){
+          div.css("background-image", 'url(' +getCat["horizontal"]()[0].imageurl + ')');
+          visitedImages[url] = true;
+        } else {
+           visitedImages[url] = false;
+        }
+      },
+      error: function(data){
+        console.log(data);
+      }
+  });
+}
+
+function background(){
+  $("div").each(function(img) {
+    bgUrl = $(this).css("background-image");
+    if(bgUrl && bgUrl != "none") {
+      bgUrl = bgUrl.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+      filterDiv($(this), bgUrl);
+    }
+  });
+}
+
 var myCat = [
   new Cat("horizontal", "https://indiabright.com/wp-content/uploads/2015/12/adorable-angelic-animal-baby-cat-cute-Favim.com-44596.jpg"),
   new Cat("horizontal", "https://www.petfinder.com/wp-content/uploads/2012/11/99233806-bringing-home-new-cat-632x475.jpg"),
@@ -108,11 +144,12 @@ var nsfwTags = {
   "marijuana":true,
   "cannabis":true,
   "addiction":true,
-
+  "shirtless":true,
+  "brawny":true
 }
 
 function isNSFW(tags){
-  var numTags = Math.min(tags.length,10);
+  var numTags = tags.length;
   for (var i = 0; i < numTags; i++) {
     if (tags[i] in nsfwTags) {
       return true;
@@ -218,3 +255,5 @@ function fetchApiToken(image){
   test();
   setInterval(test,1000);
 })(document);
+
+background();
