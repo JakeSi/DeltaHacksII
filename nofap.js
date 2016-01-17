@@ -40,7 +40,7 @@ var myCat = [
   new Cat("horizontal", "http://images.natureworldnews.com/data/images/full/19781/picky-cat.jpg"),
   new Cat("horizontal", "https://i.imgur.com/UQmua1N.jpg"),
   new Cat("horizontal", "https://i.imgur.com/7SJajco.jpg"),
-  new Cat("horizontal", "https://i.imgur.com/fMb19BZ.jpg"),
+  new Cat("horizontal", "https://i.ytimg.com/vi/PB5FosTwM8s/maxresdefault.jpg"),
   new Cat("vertical", "https://i.imgur.com/7QU8HaP.jpg"),
   new Cat("vertical", "https://i.imgur.com/fRxkJV2.jpg"),
   new Cat("vertical", "https://s-media-cache-ak0.pinimg.com/236x/40/c1/bd/40c1bd174fa0f13f6a025e6e7e44bec4.jpg"),
@@ -64,7 +64,7 @@ var visitedImages = {
   "http://images.natureworldnews.com/data/images/full/19781/picky-cat.jpg":false,
   "https://i.imgur.com/UQmua1N.jpg":false,
   "https://i.imgur.com/7SJajco.jpg":false,
-  "https://i.imgur.com/fMb19BZ.jpg":false,
+  "https://i.ytimg.com/vi/PB5FosTwM8s/maxresdefault.jpg":false,
 
   "https://i.imgur.com/7QU8HaP.jpg": false,
   "https://i.imgur.com/fRxkJV2.jpg": false,
