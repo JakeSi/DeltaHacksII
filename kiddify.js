@@ -20,12 +20,12 @@ var getCat = {
     return this.myCat.filter(function(myCat){
       return myCat.ratio === "vertical";
     });
-  }, 
+  },
 
   square: function (){
     return this.myCat.filter(function(myCat){
       return myCat.ratio === "square";
-    });  
+    });
   }
 };
 
@@ -33,7 +33,7 @@ function Randomize(images){
   return Math.floor(Math.random() * images.length)
 }
 
-var myCat = [ 
+var myCat = [
   new Cat("horizontal", "https://indiabright.com/wp-content/uploads/2015/12/adorable-angelic-animal-baby-cat-cute-Favim.com-44596.jpg"),
   new Cat("horizontal", "https://www.petfinder.com/wp-content/uploads/2012/11/99233806-bringing-home-new-cat-632x475.jpg"),
   new Cat("horizontal", "http://nextranks.com/data_images/main/cats/cats-04.jpg"),
@@ -130,7 +130,7 @@ function loadCatImage(image){
 
 function filterImage(img){
   var authbearer = " Bearer " + token;
-  $.ajax({ 
+  $.ajax({
       headers : {
         "Authorization": authbearer
       },
@@ -140,7 +140,7 @@ function filterImage(img){
         "url": img.src
       },
       success: function(data){
-      console.log(data);       
+      console.log(data);
         if(isNSFW(data.results[0].result.tag.classes)){
           console.log("NSFW");
           console.log(img.src);
@@ -167,10 +167,10 @@ function imageRatio(image) {
   }else{
     return "square";
   }
-}     
+}
 
 function fetchApiToken(image){
-  $.ajax({ 
+  $.ajax({
 
     type: "POST",
     dataType: "json",
@@ -183,7 +183,7 @@ function fetchApiToken(image){
     async: false,
     success: function(data){
       console.log(data);
-      token = data.access_token;       
+      token = data.access_token;
     },
     error: function(data){
       console.log(data);
