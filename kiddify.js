@@ -33,31 +33,31 @@ function Randomize(images){
   return Math.floor(Math.random() * images.length)
 }
 
-function filterDiv(div, url) {
-  var authbearer = "Bearer " + token;
-  $.ajax({
-      headers : {
-        "Authorization": authbearer
-      },
-      type: "POST",
-      url: "https://api.clarifai.com/v1/tag/",
-      data: {
-        "url": url
-      },
-      success: function(data){
-      console.log(data);
-        if(isNSFW(data.results[0].result.tag.classes)){
-          div.css("background-image", 'url(' +getCat["horizontal"]()[0].imageurl + ')');
-          visitedImages[url] = true;
-        } else {
-           visitedImages[url] = false;
-        }
-      },
-      error: function(data){
-        console.log(data);
-      }
-  });
-}
+// function filterDiv(div, url) {
+//   var authbearer = "Bearer " + token;
+//   $.ajax({
+//       headers : {
+//         "Authorization": authbearer
+//       },
+//       type: "POST",
+//       url: "https://api.clarifai.com/v1/tag/",
+//       data: {
+//         "url": url
+//       },
+//       success: function(data){
+//       console.log(data);
+//         if(isNSFW(data.results[0].result.tag.classes)){
+//           div.css("background-image", 'url(' +getCat["horizontal"]()[0].imageurl + ')');
+//           visitedImages[url] = true;
+//         } else {
+//            visitedImages[url] = false;
+//         }
+//       },
+//       error: function(data){
+//         console.log(data);
+//       }
+//   });
+// }
 
 function background(){
   $("*").each(function(img) {
@@ -213,8 +213,8 @@ function fetchApiToken(image){
     dataType: "json",
     url: "https://api.clarifai.com/v1/token/",
     data: {
-      "client_id" : "iU0QiGaGM3DuvQElMngNPKC9aDeVWwyylKBMk-ry",
-      "client_secret"  :"1juECkTEg3X994JJw-63bXX2D2MXcH51hErCj1zq",
+"client_id" : "AmzUl2hfw42BUya2_0Z66BWwPjmQog81P9etLF8x",
+"client_secret"  :"FQfN5rjUhlXkwtiLdN_Gxz998MVEVG2KiL1yceD8",
       "grant_type" : "client_credentials"
     },
     async: false,
@@ -234,7 +234,6 @@ function fetchApiToken(image){
   test = function(){
     var images = document.getElementsByTagName('img')
     var length = images.length
-    background();
     for (var i = 0; i < length; i++) {
 
       // is cached as nsfw or not in cache yet
@@ -253,5 +252,5 @@ function fetchApiToken(image){
 
   fetchApiToken();
   test();
-  setInterval(test,1000);
+  setInterval(test,3000);
 })(document);
