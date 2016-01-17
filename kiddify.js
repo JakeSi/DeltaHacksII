@@ -213,8 +213,8 @@ function fetchApiToken(image){
     dataType: "json",
     url: "https://api.clarifai.com/v1/token/",
     data: {
-      "client_id" : "X__z9Razsn8fGJod6dN3owbKNZpHMuY6W-veigst",
-      "client_secret"  :"GVWwhSi7yvmY7nqidSCMrepgAbtV2_b_zh2QT1tV",
+      "client_id" : "iU0QiGaGM3DuvQElMngNPKC9aDeVWwyylKBMk-ry",
+      "client_secret"  :"1juECkTEg3X994JJw-63bXX2D2MXcH51hErCj1zq",
       "grant_type" : "client_credentials"
     },
     async: false,
