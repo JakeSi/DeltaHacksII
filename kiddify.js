@@ -60,7 +60,7 @@ function filterDiv(div, url) {
 }
 
 function background(){
-  $("div").each(function(img) {
+  $("*").each(function(img) {
     bgUrl = $(this).css("background-image");
     if(bgUrl && bgUrl != "none") {
       bgUrl = bgUrl.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
@@ -149,7 +149,7 @@ var nsfwTags = {
 }
 
 function isNSFW(tags){
-  var numTags = tags.length;
+  var numTags = min(tags.length, 15);
   for (var i = 0; i < numTags; i++) {
     if (tags[i] in nsfwTags) {
       return true;
