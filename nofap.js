@@ -34,13 +34,27 @@ function Randomize(images){
 }
 
 var myCat = [ 
-  new Cat("horizontal", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
-  new Cat("vertical", "http://www.helpinghomelesscats.com/images/cat1.jpg"),
-  new Cat("square", "http://www.helpinghomelesscats.com/images/cat1.jpg")
+  new Cat("horizontal", "https://indiabright.com/wp-content/uploads/2015/12/adorable-angelic-animal-baby-cat-cute-Favim.com-44596.jpg"),
+  new Cat("horizontal", "https://www.petfinder.com/wp-content/uploads/2012/11/99233806-bringing-home-new-cat-632x475.jpg"),
+  new Cat("horizontal", "https://nextranks.com/data_images/main/cats/cats-04.jpg"),
+  new Cat("vertical", "https://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg"),
+  new Cat("vertical", "https://www.artistiqueacres.com/images/cute-cat.jpg"),
+  new Cat("vertical", "https://s-media-cache-ak0.pinimg.com/236x/40/c1/bd/40c1bd174fa0f13f6a025e6e7e44bec4.jpg"),
+  new Cat("square", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg"),
+  new Cat("square", "https://www.helpinghomelesscats.com/images/cat1.jpg"),
+  new Cat("square", "https://s.hswstatic.com/gif/abyssinian-cat.jpg")
 ]
-
 var visitedImages = {
-  "http://www.helpinghomelesscats.com/images/cat1.jpg" : false
+  "https://indiabright.com/wp-content/uploads/2015/12/adorable-angelic-animal-baby-cat-cute-Favim.com-44596.jpg" : false,
+  "https://www.petfinder.com/wp-content/uploads/2012/11/99233806-bringing-home-new-cat-632x475.jpg" : false,
+  "https://nextranks.com/data_images/main/cats/cats-04.jpg" : false,
+  "https://www.cats.org.uk/uploads/images/pages/photo_latest14.jpg": false,
+  "https://www.artistiqueacres.com/images/cute-cat.jpg": false,
+  "https://s-media-cache-ak0.pinimg.com/236x/40/c1/bd/40c1bd174fa0f13f6a025e6e7e44bec4.jpg": false,
+  "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg": false,
+  "https://www.helpinghomelesscats.com/images/cat1.jpg" : false,
+  "https://s.hswstatic.com/gif/abyssinian-cat.jpg": false
+
 }
 
 var nsfwTags = {
@@ -60,7 +74,11 @@ var nsfwTags = {
   "naked":true,
   "underwear":true,
   "lingerie":true,
-  "pantie":true
+  "pantie":true,
+  "marijuana":true,
+  "cannabis":true,
+  "addiction":true,
+
 }
 
 function isNSFW(tags){
@@ -72,6 +90,12 @@ function isNSFW(tags){
   };
 
   return false;
+}
+
+function loadCatImage(image){
+  var ratio = imageRatio(image);
+  var number = Randomize(getCat[ratio]());
+  return getCat[ratio]()[number].imageurl;
 }
 
 function filterImage(img){
@@ -90,8 +114,8 @@ function filterImage(img){
         if(isNSFW(data.results[0].result.tag.classes)){
           console.log("NSFW");
           console.log(img.src);
-           visitedImages[img.src] = true;
-          img.src = getCat["horizontal"]()[0].imageurl;
+          visitedImages[img.src] = true;
+          img.src = loadCatImage(img);
         } else {
            visitedImages[img.src] = false;
         }
@@ -106,12 +130,12 @@ function filterImage(img){
 function imageRatio(image) {
   var proportion = image.height/image.width;
 
-  if(proportion > 1) {
+  if(proportion > 0.9) {
     return "vertical";
-  } else if(proportion === 1) {
-    return "square";
-  } else if(proportion < 1) {
+  }else if(proportion < 1.1) {
     return "horizontal";
+  }else{
+    return "square";
   }
 }     
 
@@ -122,8 +146,8 @@ function fetchApiToken(image){
     dataType: "json",
     url: "https://api.clarifai.com/v1/token/",
     data: {
-      "client_id" : "X__z9Razsn8fGJod6dN3owbKNZpHMuY6W-veigst",
-      "client_secret"  :"GVWwhSi7yvmY7nqidSCMrepgAbtV2_b_zh2QT1tV",
+      "client_id": "jh5NmLb9r7d0HnmsnrJ7JU9m1kUTasdwf85PHjQw",
+      "client_secret" : "DHEAVtaAHniJACaIpnWBTo0JCyAyhtcFdaoeb-vH",
       "grant_type" : "client_credentials"
     },
     async: false,
@@ -145,7 +169,6 @@ function fetchApiToken(image){
     var length = images.length
 
     for (var i = 0; i < length; i++) {
-      var ratio = imageRatio(images[i]);
 
       // is cached as nsfw or not in cache yet
       if(!(images[i].src in visitedImages)) {
@@ -153,7 +176,7 @@ function fetchApiToken(image){
           filterImage(images[i]);
         };
       }else if(visitedImages[images[i].src]){
-        image[i].src = getCat["horizontal"]()[0].imageurl;
+        images[i].src = loadCatImage(images[i]);
       }
       // var number = Randomize(getCat[ratio]());
     }
