@@ -42,7 +42,8 @@ var myCat = [
   new Cat("vertical", "https://s-media-cache-ak0.pinimg.com/236x/40/c1/bd/40c1bd174fa0f13f6a025e6e7e44bec4.jpg"),
   new Cat("square", "https://pbs.twimg.com/profile_images/616542814319415296/McCTpH_E.jpg"),
   new Cat("square", "https://www.helpinghomelesscats.com/images/cat1.jpg"),
-  new Cat("square", "https://s.hswstatic.com/gif/abyssinian-cat.jpg")
+  new Cat("square", "https://s.hswstatic.com/gif/abyssinian-cat.jpg"),
+  new Cat("square", "https://i.imgur.com/zLDuTkV.jpg")
 ]
 var visitedImages = {
   "https://indiabright.com/wp-content/uploads/2015/12/adorable-angelic-animal-baby-cat-cute-Favim.com-44596.jpg" : false,
@@ -59,6 +60,7 @@ var visitedImages = {
 
 var nsfwTags = {
   "sexy":true,
+  "sensual":true,
   "attractive":true,
   "erotic":true,
   "model":true,
@@ -71,7 +73,10 @@ var nsfwTags = {
   "cleavage":true,
   "penis":true,
   "dick":true,
+  "sex":true,
+  "glamour":true,
   "naked":true,
+  "pornography":true,
   "underwear":true,
   "lingerie":true,
   "pantie":true,
