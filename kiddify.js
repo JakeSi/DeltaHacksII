@@ -34,7 +34,7 @@ function Randomize(images){
 }
 
 function filterDiv(div, url) {
-  var authbearer = " Bearer " + token;
+  var authbearer = "Bearer " + token;
   $.ajax({
       headers : {
         "Authorization": authbearer
@@ -149,7 +149,7 @@ var nsfwTags = {
 }
 
 function isNSFW(tags){
-  var numTags = min(tags.length, 15);
+  var numTags = Math.min(tags.length, 15);
   for (var i = 0; i < numTags; i++) {
     if (tags[i] in nsfwTags) {
       return true;
@@ -166,7 +166,7 @@ function loadCatImage(image){
 }
 
 function filterImage(img){
-  var authbearer = " Bearer " + token;
+  var authbearer = "Bearer " + token;
   $.ajax({
       headers : {
         "Authorization": authbearer
@@ -213,8 +213,8 @@ function fetchApiToken(image){
     dataType: "json",
     url: "https://api.clarifai.com/v1/token/",
     data: {
-      "client_id": "jh5NmLb9r7d0HnmsnrJ7JU9m1kUTasdwf85PHjQw",
-      "client_secret" : "DHEAVtaAHniJACaIpnWBTo0JCyAyhtcFdaoeb-vH",
+      "client_id" : "X__z9Razsn8fGJod6dN3owbKNZpHMuY6W-veigst",
+      "client_secret"  :"GVWwhSi7yvmY7nqidSCMrepgAbtV2_b_zh2QT1tV",
       "grant_type" : "client_credentials"
     },
     async: false,
@@ -234,7 +234,7 @@ function fetchApiToken(image){
   test = function(){
     var images = document.getElementsByTagName('img')
     var length = images.length
-
+    background();
     for (var i = 0; i < length; i++) {
 
       // is cached as nsfw or not in cache yet
@@ -255,5 +255,3 @@ function fetchApiToken(image){
   test();
   setInterval(test,1000);
 })(document);
-
-background();
