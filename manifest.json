@@ -1,22 +1,22 @@
 {
-  "name": "No Fap",
+  "name": "Kiddify",
   "version": "1.0",
   "homepage_url": "http://peterchu.me",
   "description": "Replaces all images of sexy girls with cute pussies",
   "icons": {},
   "browser_action": {
     "default_icon": "icon_128.png",
-    "default_title": "NO FAP"
+    "default_title": "Kiddify"
   },
   "permissions": [
     "activeTab"
   ],
   "background": {
-    "scripts": ["background.js", "nofap.js"],
+    "scripts": ["background.js", "kiddify.js"],
     "persistent": false
   },
   "content_scripts": [ {
-    "js": [ "jquery-2.2.0.min.js", "background.js", "nofap.js" ],
+    "js": [ "jquery-2.2.0.min.js", "background.js", "kiddify.js" ],
     "matches": ["<all_urls>"]
   }],
   "manifest_version": 2
