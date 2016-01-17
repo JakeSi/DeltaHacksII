@@ -85,6 +85,8 @@ function filterImage(img){
         if(isNSFW(data.results[0].tags)){
           visitedImages[img.imageurl] = true;
           img.src = getCat["horizontal"]()[0].imageurl;
+        } else {
+          visitedImages[img.imageurl] = false;
         }
       },
       error: function(data){
@@ -113,7 +115,10 @@ function imageRatio(image) {
   var images = document.getElementsByTagName('img')
   var length = images.length
 
-  filterImage(images[0]);
+  // is cached as nsfw or not in cache yet
+  if(!(images[0].imageurl in visitedImages) || (visitedImages[images[0]].imageurl)) {
+    filterImage(images[0]);
+  }
 
   for (var i = 0; i < length; i++) {
     var ratio = imageRatio(images[i]);
